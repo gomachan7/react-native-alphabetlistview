@@ -54,10 +54,12 @@ export default class SectionList extends Component {
     //UIManager.findSubviewIn(e.target, rect, viewTag => {
       //this.onSectionSelect(view, true);
     //})
+    const offset = this.props.listAlign == "center";
+
     const targetY = ev.pageY;
     const { y, width, height } = this.measure;
-    const index = (Math.floor(ev.locationY / height));
-    if (index >= this.props.sections.length) {
+    const index = (Math.floor((ev.locationY - y) / height));
+    if (index >= this.props.sections.length || index < 0) {
       return;
     }
 
@@ -76,7 +78,7 @@ export default class SectionList extends Component {
       sectionItem.measure((x, y, width, height, pageX, pageY) => {
         //console.log([x, y, width, height, pageX, pageY]);
         this.measure = {
-          y: pageY,
+          y: y,
           width,
           height
         };
@@ -137,7 +139,7 @@ export default class SectionList extends Component {
     });
 
     return (
-      <View ref="view" style={[styles.container, this.props.style]}
+      <View ref="view" style={[styles.container, this.props.style, this.props.listAlign == "center" ? {justifyContent: "center"} : {}]}
         onStartShouldSetResponder={returnTrue}
         onMoveShouldSetResponder={returnTrue}
         onResponderGrant={this.detectAndScrollToSection}
@@ -187,6 +189,11 @@ SectionList.propTypes = {
     PropTypes.number,
     PropTypes.object,
   ]),
+
+  /**
+   * List vartical align
+   */
+  listAlign: PropTypes.string,
 };
 
 const styles = StyleSheet.create({
