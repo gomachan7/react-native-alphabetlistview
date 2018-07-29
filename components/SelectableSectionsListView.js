@@ -108,7 +108,7 @@ export default class SelectableSectionsListView extends Component {
 
     if (!this.props.useDynamicHeights) {
       const cellHeight = this.props.cellHeight;
-      let sectionHeaderHeight = this.props.sectionHeaderHeight;
+      let sectionHeaderHeight = 0;
       let keys = Object.keys(this.props.data);
       if (typeof(this.props.compareFunction) === "function") {
         keys = keys.sort(this.props.compareFunction);
@@ -118,9 +118,9 @@ export default class SelectableSectionsListView extends Component {
       let numcells = 0;
       for (var i = 0; i < index; i++) {
         numcells += this.props.data[keys[i]].length;
+        sectionHeaderHeight += this.props.data[keys[i]].length != 0 ? this.props.sectionHeaderHeight : 0;
       }
 
-      sectionHeaderHeight = index * sectionHeaderHeight;
       y += numcells * cellHeight + sectionHeaderHeight;
       const maxY = this.totalHeight - this.containerHeight + headerHeight;
       y = y > maxY ? maxY : y;
