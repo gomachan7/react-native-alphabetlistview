@@ -213,11 +213,11 @@ const styles = StyleSheet.create({
 
   text: {
     fontWeight: '700',
-    color: '#008fff'
+    color: '#8E8E93'
   },
 
   inactivetext: {
     fontWeight: '700',
-    color: '#CCCCCC'
+    color: '#CECED0'
   }
 });
